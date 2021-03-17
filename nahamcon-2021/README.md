@@ -15,7 +15,7 @@ Turns out there are various ways to do instrospection, because the introspection
 I then looked for existing queries via the following request
 
 ```
-{"query":"{__type(name: \"Query\") {name    fields {      name type { name    kind }}}}"}
+{"query":"{__type(name: \"Query\") {name fields { name type { name kind }}}}"}
 ```
 
 The output reveals there's a `flag` scalar in GraphQL:
@@ -40,7 +40,7 @@ That query leaks out admin password: `52a9715ba147f750d0751aeccc22b8cc2ff7a9db`.
 I then looked into graphql mutations:
 
 ```
-{"query":"mutation {createUser(username: \"foo\", password:\"barbar\"){id username password}}"}
+{"query":"mutation {createUser(username: \"foo\", password:\"bar\"){id username password}}"}
 ```
 
 Creates a User.
@@ -48,7 +48,7 @@ Creates a User.
 And:
 
 ```
-{"query":"mutation {authenticateUser(username: \"foo\", password:\"password\"){token}}"}
+{"query":"mutation {authenticateUser(username: \"foo\", password:\"bar\"){token}}"}
 ```
 
 authenticates the user. Checking what's returned, it's a JWT token. (you present it with `Authentication: Bearer <token>`)
@@ -65,4 +65,4 @@ Summarizing:
 I was stuck after that. Remaining ideas:
 
 * Identify a graphql injection path.
-* Somehow go the crypto way and find a way to bruteforce the admin password
+* Get to the seed, then to the original admin password.
