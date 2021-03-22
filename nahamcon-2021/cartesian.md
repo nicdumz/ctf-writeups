@@ -90,7 +90,7 @@ I was stuck after that. Remaining ideas:
 ## Intended solution
 
 1. Create a user, and store `$user_password` and `$user_hash`
-1. [hashcat](https://hashcat.net/wiki/doku.php?id=example_hashes) mode 120 is `sha1($salt.$pass)`. In this case we know a password but not a hash, so we can run something like `hashcat -m 120 -a 3` where the input is `$user_hash:$user_password`. This returns you the salt.
+1. [hashcat](https://hashcat.net/wiki/doku.php?id=example_hashes) mode 120 is `sha1($salt.$pass)`. In this case we know a password but not the salt, so reverting the typical inputs we can run something like `hashcat -m 120 -a 3` where the input is `$user_hash:$user_password`. This returns you the salt.
 1. Run `hashcat -m 110 -a 3` on `$admin_hash:$salt` to figure out the admin password.
 1. Login as the user, and run again the `{flag}` query to exfiltrate the flag.
 
